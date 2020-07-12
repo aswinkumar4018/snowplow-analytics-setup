@@ -1,0 +1,42 @@
+enrich {
+
+  streams {
+
+    in {
+      raw = "snowplow-collected-good-events-stream"
+    }
+
+    out {
+      enriched = "snowplow-collected-good-events-stream"
+      bad = "snowplow-enriched-bad-events-stream"
+      partitionKey = "event_id"
+    }
+
+    sourceSink {
+      enabled =  kinesis
+      region = us-east-1
+      aws {
+         accessKey = default
+         secretKey = default
+      }
+
+
+      maxRecords = 10000
+      initialPosition = TRIM_HORIZON
+      initialTimestamp = "2019-11-17T10:00:00Z"
+
+      backoffPolicy {
+        minBackoff = 1000
+        maxBackoff = 5000
+      }      
+    }
+
+    buffer {
+      byteLimit = 1000000000
+      recordLimit = 10 # Not supported by Kafka; will be ignored
+      timeLimit = 5000
+    }
+
+    appName = "enricher-app"
+  }
+}

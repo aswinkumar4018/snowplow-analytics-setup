@@ -1,0 +1,23 @@
+service: snowplow-transform-lambdas
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: dev
+  region: us-east-1
+  stackTags: # CF stack tags
+    name: ${self:service}-${self:provider.stage}-cft
+    purpose:  CloudFormation Template for Setting up Snowplow Analytics Transform Lambdas
+  tags: # Tags that will be added to each of the deployment resources
+    name: ${self:service}-${self:provider.stage}
+    purpose: Snowplow Analytics Transform Lambda ${self:provider.stage}
+
+package:
+  exclude:
+    - .git/**
+    
+functions:
+  snowplow-json-transformer-lambda:
+    name: snowplow-json-transformer-lambda
+    handler: snowplow-json-transformer-lambda.handler
+    timeout: 900

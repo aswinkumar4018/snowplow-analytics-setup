@@ -1,0 +1,28 @@
+{
+  "schema": "iglu:com.snowplowanalytics.iglu/resolver-config/jsonschema/1-0-1",
+  "data": {
+    "cacheSize": 500,
+    "repositories": [
+      {
+        "name": "Iglu Central",
+        "priority": 0,
+        "vendorPrefixes": [ "com.snowplowanalytics" ],
+        "connection": {
+          "http": {
+            "uri": "http://iglucentral.com"
+          }
+        }
+      },
+      {
+        "name": "POC Iglu on AWS S3",
+        "priority": 1,
+        "vendorPrefixes": [ "com.company" ],
+        "connection": {
+          "http": {
+            "uri": "https://snowplow-schema-repository.s3.amazonaws.com"
+          }
+        }
+      }
+    ]
+  }
+}

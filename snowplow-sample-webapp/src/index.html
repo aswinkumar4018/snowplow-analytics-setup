@@ -1,0 +1,55 @@
+<html>
+    <head>
+        <title>Snowplow Sample Webapp</title>
+        <script type="text/javascript" async=1>
+            ;(function(p,l,o,w,i,n,g){if(!p[i]){p.GlobalSnowplowNamespace=p.GlobalSnowplowNamespace||[];
+            p.GlobalSnowplowNamespace.push(i);p[i]=function(){(p[i].q=p[i].q||[]).push(arguments)
+            };p[i].q=p[i].q||[];n=l.createElement(o);g=l.getElementsByTagName(o)[0];n.async=1;
+            n.src=w;g.parentNode.insertBefore(n,g)}}(window,document,"script","//d1fc8wv8zag5ca.cloudfront.net/2.10.2/sp.js","snowplow"));
+        </script>
+
+
+        <script>
+           // Instantiate new Snowplow tracker with your Snowplow collector DNS host name
+            snowplow("newTracker", "sp", "snowplow.elb.amazonaws.com", {
+                appId: "sample-app",
+                platform: "web",
+                eventMethod: "post",
+                contexts: {
+                    webPage: true,
+                    performanceTiming: true
+                }
+            });
+        </script>
+
+        <script>
+            // Track Page View
+            snowplow('trackPageView');
+
+            // Track Custom Event (Self Describing Event) - Create Case    
+            function send_to_snowplow_collector() {
+                console.log("send_to_snowplow_collector function called");
+                let caseDescription = document.getElementById("case_description_area").value;
+                console.log(caseDescription);
+                snowplow('trackSelfDescribingEvent', {
+                        schema: 'iglu:com.company/create_case/jsonschema/1-0-0',
+                        data: {
+                            caseDescription: caseDescription
+                        }
+                    }
+                );
+            }
+        </script>
+
+
+    </head>
+    <body>
+        <h3>Snowplow Sample Webapp</h3>
+
+        <p><strong>Type in case description and click on "Create Case" button to send case description to Snowplow pipeline as a custom event (self describing event).</strong></p>
+        <p><strong><i> Note: you can track the event request to Snowplow collector from network tab.</strong></i></p>
+        <br>
+        <textarea id="case_description_area" rows="4" cols="50">This is test case creation description</textarea><br>
+        <button type="button" onclick="send_to_snowplow_collector()"> Create Case </button>
+    </body>
+</html>

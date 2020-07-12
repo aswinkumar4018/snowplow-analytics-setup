@@ -1,0 +1,18 @@
+{
+	"$schema": "https://snowplow-schema-repository.s3.amazonaws.com/schemas/com.company/create_case/jsonschema/1-0-0",
+	"description": "Schema for Create Case event",
+	"self": {
+		"vendor": "com.company",
+		"name": "create_case",
+		"format": "jsonschema",
+		"version": "1-0-0"
+	},
+	"type": "object",
+	"properties": {
+		"caseDescription": {
+			"type": "string"
+		}
+	},
+	"required": ["caseDescription"],
+	"additionalProperties": false
+}
