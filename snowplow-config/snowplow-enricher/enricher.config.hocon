@@ -7,7 +7,7 @@ enrich {
     }
 
     out {
-      enriched = "snowplow-collected-good-events-stream"
+      enriched = "snowplow-enriched-good-events-stream"
       bad = "snowplow-enriched-bad-events-stream"
       partitionKey = "event_id"
     }
@@ -28,7 +28,7 @@ enrich {
       backoffPolicy {
         minBackoff = 1000
         maxBackoff = 5000
-      }      
+      }
     }
 
     buffer {
